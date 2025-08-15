@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9
+FROM python:3.9 as base
 
 # Update the package list and install build-essential, which includes GCC
 RUN apt-get update && \
@@ -8,6 +8,8 @@ RUN apt-get update && \
 
 # (Optional) Verify the GCC installation
 RUN gcc --version
+
+FROM base as app
 
 # Set the working directory in the container
 WORKDIR /app
@@ -21,8 +23,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container at /app
 COPY . .
 
-# Define environment variables (optional)
-ENV NAME="World"
-
+ENTRYPOINT ["python", "-m", "flask", "--app", "api", "run", "--port", "5008", "--host=0.0.0.0"]
 # Run the Python application
-CMD ["python", "main.py"]
+# CMD ["python", "main.py"]

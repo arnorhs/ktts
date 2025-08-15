@@ -7,4 +7,4 @@ audio = m.generate("This high quality TTS model works without a GPU", voice='exp
 
 # Save the audio
 import soundfile as sf
-sf.write('output.wav', audio, 24000)
+sf.write('./vol/output.wav', audio, 24000)
